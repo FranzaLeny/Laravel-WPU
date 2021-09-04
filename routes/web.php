@@ -51,14 +51,14 @@ Route::middleware(['guest'])->group(function () {
 
 
 Route::middleware(['auth'])->group(function () {
-
-    Route::post('/logout', [LoginController::class, 'logout']);
-
-    Route::resource('/dashboard/posts', DashboardPostController::class);
-
     Route::get('/dashboard', function () {
         return view('dashboard.index');
     });
-
     Route::get('/dashboard/posts/createSlug', [DashboardPostController::class, 'chekSlug']);
+    Route::resource('/dashboard/posts', DashboardPostController::class);
+    Route::post('/logout', [LoginController::class, 'logout']);
+});
+
+Route::get('/dashboard/posts-createSlug', function () {
+    return 'hfsajhfsfh';
 });
