@@ -4,6 +4,9 @@ namespace Database\Factories;
 
 use App\Models\Post;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
+use \Cviebrock\EloquentSluggable\Services\SlugService;
+
 
 class PostFactory extends Factory
 {
@@ -21,16 +24,18 @@ class PostFactory extends Factory
      */
     public function definition()
     {
+        $body = collect($this->faker->paragraphs(mt_rand(10, 20)))
+            ->map(fn ($p) => "<p>$p</p>")
+            ->implode('');
+        $title = $this->faker->unique()->sentence(mt_rand(3, 8));
+
         return [
-            'title'=> $this->faker->unique()->sentence(mt_rand(3,8)),
-            'slug'=> $this->faker->unique()->slug(),
-            'excerpt'=> $this->faker->paragraph(),
-            // 'body'=> '<p>'.implode('</p><p>',$this->faker->paragraphs(mt_rand(40,200))).'</p>',
-            'body'=>collect($this->faker->paragraphs(mt_rand(10,20)))
-                        ->map(fn($p) => "<p>$p</p>")
-                        ->implode(''),
-            'user_id'=>mt_rand(1,5),
-            'category_id'=>mt_rand(1,4)
+            'title' => $title,
+            'slug' => SlugService::createSlug(Post::class, 'slug', $title),
+            'excerpt' => Str::limit(strip_tags($body), 200, '...'),
+            'body' => $body,
+            'user_id' => mt_rand(1, 5),
+            'category_id' => mt_rand(1, 4)
         ];
     }
 }

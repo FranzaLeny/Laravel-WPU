@@ -1,4 +1,4 @@
-@extends('layouts.main')
+@extends('front.layouts.main')
 @section('container')
     <h1>Post Category</h1>
     <div class="container">
@@ -7,11 +7,9 @@
                 <div class="col-md-4">
                     <a href="/posts?category={{ $category->slug }}">
                         <div class="card bg-dark text-white">
-                            <img src="https://source.unsplash.com/600x400?{{ $category->name }}" class="card-img"
-                                alt="{{ $category->name }}">
+                            <img src="https://source.unsplash.com/600x400?{{ $category->name }}" class="card-img" alt="{{ $category->name }}">
                             <div class="card-img-overlay d-flex align-items-center p-0">
-                                <h5 class="card-title text-center flex-fill p-4"
-                                    style="background-color: rgba(0, 0, 0, 0.4)">
+                                <h5 class="card-title text-center flex-fill p-4" style="background-color: rgba(0, 0, 0, 0.4)">
                                     {{ $category->name }}</h5>
                             </div>
                         </div>

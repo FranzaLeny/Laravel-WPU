@@ -16,7 +16,7 @@
 </head>
 
 <body class="bg-info bg-gradient" style="--bs-bg-opacity: .02;">
-    @include('layouts.partials.navbar')
+    @include('front.layouts.navbar')
     <div class="container mt-4">
         @yield('container')
     </div>

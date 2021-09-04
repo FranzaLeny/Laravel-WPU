@@ -18,36 +18,47 @@ use App\Http\Controllers\DashboardPostController;
 |
 */
 
-Route::get('/', function () {
-    return view('front.home', [
-        "title" => "Home"
-    ]);
+
+
+Route::middleware(['guest'])->group(function () {
+    Route::get('/', function () {
+        return view('front.home', [
+            "title" => "Home"
+        ]);
+    });
+
+    Route::get('/about', function () {
+        return view('front.about', [
+            "title" => "About"
+        ]);
+    });
+
+    //halaman post
+    Route::get('/posts', [PostController::class, 'index']);
+    Route::get('/posts/{post:slug}', [PostController::class, 'show']);
+    Route::get('/categories', function () {
+        return view('front.blog.categories', [
+            'title' => "Post Category",
+            'categories'  => Category::all()
+        ]);
+    });
+
+    Route::get('/login', [LoginController::class, 'index'])->name('login');
+    Route::post('/login', [LoginController::class, 'authenticate']);
+    Route::get('/register', [RegisterController::class, 'index']);
+    Route::post('/register', [RegisterController::class, 'store']);
 });
 
-Route::get('/about', function () {
-    return view('front.about', [
-        "title" => "About"
-    ]);
+
+Route::middleware(['auth'])->group(function () {
+
+    Route::post('/logout', [LoginController::class, 'logout']);
+
+    Route::resource('/dashboard/posts', DashboardPostController::class);
+
+    Route::get('/dashboard', function () {
+        return view('dashboard.index');
+    });
+
+    Route::get('/dashboard/posts/createSlug', [DashboardPostController::class, 'chekSlug']);
 });
-
-//halaman post
-Route::get('/posts', [PostController::class, 'index']);
-Route::get('/posts/{post:slug}', [PostController::class, 'show']);
-Route::get('/categories', function () {
-    return view('front.blog.categories', [
-        'title' => "Post Category",
-        'categories'  => Category::all()
-    ]);
-});
-
-Route::get('/login', [LoginController::class, 'index'])->name('login')->middleware('guest');
-Route::post('/login', [LoginController::class, 'authenticate'])->middleware('guest');
-Route::get('/register', [RegisterController::class, 'index'])->middleware('guest');
-Route::post('/register', [RegisterController::class, 'store'])->middleware('guest');
-Route::post('/logout', [LoginController::class, 'logout'])->middleware('auth');
-Route::get('/dashboard', function () {
-    return view('dashboard.index');
-})->middleware('auth');
-
-Route::get('/dashboard/posts/createSlug', [DashboardPostController::class, 'chekSlug'])->middleware('auth');
-Route::resource('/dashboard/posts', DashboardPostController::class)->middleware('auth');

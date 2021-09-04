@@ -1,4 +1,4 @@
-@extends('layouts.main')
+@extends('front.layouts.main')
 @section('container')
-<h1>Halaman About</h1>
+    <h1>Halaman About</h1>
 @endsection

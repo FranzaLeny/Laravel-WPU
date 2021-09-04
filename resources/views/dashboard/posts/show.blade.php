@@ -14,7 +14,7 @@
                 <article class="my-3 fs-5">
                     {!! $post->body !!}
                 </article>
-                <a href="/dashboard/posts">Back to Posts</a>
+                <a href="/dashboard/posts" class="btn btn-success"><span data-feather="arrow-left"></span> Back to All my Posts</a>
             </div>
         </div>
     </div>

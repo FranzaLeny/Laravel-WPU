@@ -13,6 +13,7 @@
 @section('container')
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2">Form Create New Posts</h1>
+        <a href="/dashboard/posts" class="btn btn-success"><span data-feather="arrow-left"></span> Back to All my Posts</a>
     </div>
 
     <div class="col-lg-8">
@@ -55,7 +56,10 @@
                 <input id="body" type="hidden" name="body" value="{{ old('body') }}">
                 <trix-editor input="body"></trix-editor>
             </div>
-            <button type="submit" class="btn btn-primary">Create Post</button>
+            <div class="d-flex justify-content-end flex-wrap flex-md-nowrap align-items-end">
+                <a href="/dashboard/posts" class="btn btn-danger mx-5"><span data-feather="arrow-left"></span> Cancel</a>
+                <button type="submit" class="btn btn-primary"><span data-feather="save"></span> Create Post</button>
+            </div>
         </form>
     </div>
 
